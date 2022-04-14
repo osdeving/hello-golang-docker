@@ -1,0 +1,14 @@
+FROM golang as build
+
+WORKDIR /
+
+COPY hello.go hello.go
+
+RUN go build hello.go
+
+FROM scratch
+
+WORKDIR /app
+COPY --from=build hello .
+
+ENTRYPOINT [ "./hello" ]
